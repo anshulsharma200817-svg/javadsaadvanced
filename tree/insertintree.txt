@@ -1,0 +1,582 @@
+# BST Insertion — Full Revision Notes (OOP + Tree Initialization + Recursive Solution)
+
+## 1. What is a TreeNode?
+
+A tree is made using **objects**.
+
+Every node in a Binary Tree stores:
+
+* a value
+* left child reference
+* right child reference
+
+Example class:
+
+```java
+public class TreeNode {
+
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {}
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+```
+
+Think:
+
+Each object/node looks like this in memory:
+
+```text
+ -----------------
+| val = 10       |
+| left = null    |
+| right = null   |
+ -----------------
+```
+
+`left` and `right` store **references (addresses)** to other nodes.
+
+---
+
+# 2. Tree Initialization (Most Important OOP Concept)
+
+## Creating One Node
+
+```java
+TreeNode root = new TreeNode(10);
+```
+
+Memory:
+
+```text
+root
+ ↓
+ -----------------
+| val = 10       |
+| left = null    |
+| right = null   |
+ -----------------
+```
+
+Only one node exists.
+
+---
+
+## Connecting Child Nodes
+
+```java
+root.left = new TreeNode(5);
+root.right = new TreeNode(20);
+```
+
+Tree becomes:
+
+```text
+        10
+       /  \
+      5    20
+```
+
+Internal understanding:
+
+```text
+root
+ ↓
+ -----------------
+| val = 10       |
+| left ----------→ node(5)
+| right ---------→ node(20)
+ -----------------
+```
+
+We are storing **references**, not copies.
+
+---
+
+## Bigger Tree Initialization Example
+
+```java
+TreeNode root = new TreeNode(10);
+
+root.left = new TreeNode(5);
+root.right = new TreeNode(20);
+
+root.left.left = new TreeNode(2);
+root.left.right = new TreeNode(8);
+
+root.right.left = new TreeNode(15);
+root.right.right = new TreeNode(30);
+```
+
+Tree:
+
+```text
+            10
+          /    \
+         5      20
+       /  \    /  \
+      2    8  15  30
+```
+
+Understanding:
+
+```java
+root.left.left
+```
+
+means:
+
+```text
+root → left → left
+10 → 5 → 2
+```
+
+Similarly:
+
+```java
+root.right.left
+```
+
+means:
+
+```text
+10 → 20 → 15
+```
+
+---
+
+# 3. BST Rule (Very Important)
+
+Binary Search Tree Rule:
+
+```text
+left subtree < current node
+right subtree > current node
+```
+
+Example:
+
+```text
+         10
+       /    \
+      5      20
+```
+
+Here:
+
+```text
+5 < 10
+20 > 10
+```
+
+Always true.
+
+---
+
+# 4. Logic for Inserting in BST
+
+Suppose tree:
+
+```text
+         10
+       /    \
+      5      20
+            /
+           15
+```
+
+Insert:
+
+```text
+13
+```
+
+### Step 1
+
+Current node:
+
+```text
+10
+```
+
+Compare:
+
+```text
+13 > 10
+```
+
+Go right.
+
+---
+
+### Step 2
+
+Current node:
+
+```text
+20
+```
+
+Compare:
+
+```text
+13 < 20
+```
+
+Go left.
+
+---
+
+### Step 3
+
+Current node:
+
+```text
+15
+```
+
+Compare:
+
+```text
+13 < 15
+```
+
+Go left.
+
+---
+
+### Step 4
+
+Left is:
+
+```text
+null
+```
+
+Meaning:
+
+```text
+empty space found
+```
+
+Create node here.
+
+Final tree:
+
+```text
+         10
+       /    \
+      5      20
+            /
+           15
+          /
+         13
+```
+
+---
+
+# 5. Recursive Thinking
+
+At every node ask:
+
+### If smaller
+
+```java
+go left
+```
+
+### If greater
+
+```java
+go right
+```
+
+### If null
+
+```java
+create node
+```
+
+This naturally becomes recursion.
+
+---
+
+# 6. Full LeetCode Solution (Copy-Paste Ready)
+
+```java
+class Solution {
+
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+
+        // base case
+        // empty position found
+        if(root == null) {
+            return new TreeNode(val);
+        }
+
+        // go to left subtree
+        if(val < root.val) {
+
+            root.left = insertIntoBST(root.left, val);
+        }
+
+        // go to right subtree
+        else if(val > root.val) {
+
+            root.right = insertIntoBST(root.right, val);
+        }
+
+        // return root after insertion
+        return root;
+    }
+}
+```
+
+---
+
+# 7. Line-by-Line Explanation
+
+## Base Case
+
+```java
+if(root == null) {
+    return new TreeNode(val);
+}
+```
+
+Meaning:
+
+```text
+empty spot found
+```
+
+Create node and return it.
+
+Example:
+
+Before:
+
+```text
+15
+/
+null
+```
+
+After inserting 13:
+
+```text
+15
+/
+13
+```
+
+---
+
+## Going Left
+
+```java
+root.left = insertIntoBST(root.left, val);
+```
+
+Meaning:
+
+```text
+insert in left subtree
+```
+
+and reconnect returned subtree.
+
+Example:
+
+Current node:
+
+```text
+15
+```
+
+Insert:
+
+```text
+13
+```
+
+Since:
+
+```text
+13 < 15
+```
+
+Go left.
+
+---
+
+## Going Right
+
+```java
+root.right = insertIntoBST(root.right, val);
+```
+
+Meaning:
+
+```text
+insert in right subtree
+```
+
+Example:
+
+Current node:
+
+```text
+10
+```
+
+Insert:
+
+```text
+13
+```
+
+Since:
+
+```text
+13 > 10
+```
+
+Go right.
+
+---
+
+## Final Return
+
+```java
+return root;
+```
+
+Why?
+
+To reconnect nodes while recursion comes back.
+
+Very important recursive tree pattern.
+
+Without returning root:
+
+tree connections would break.
+
+---
+
+# 8. Dry Run Example
+
+Tree:
+
+```text
+       10
+      /  \
+     5    20
+         /
+        15
+```
+
+Insert:
+
+```text
+13
+```
+
+Call stack:
+
+```text
+insert(10,13)
+    ↓
+insert(20,13)
+    ↓
+insert(15,13)
+    ↓
+insert(null,13)
+```
+
+At null:
+
+```java
+return new TreeNode(13);
+```
+
+Then recursion returns:
+
+```text
+15.left = 13
+20.left = 15
+10.right = 20
+```
+
+Final:
+
+```text
+       10
+      /  \
+     5    20
+         /
+        15
+       /
+      13
+```
+
+---
+
+# 9. Time Complexity
+
+Worst Case:
+
+```text
+O(H)
+```
+
+where:
+
+```text
+H = height of tree
+```
+
+Balanced BST:
+
+```text
+O(log n)
+```
+
+Skewed BST:
+
+```text
+O(n)
+```
+
+---
+
+# 10. Golden Pattern for Recursive Tree Problems
+
+You will see this again and again:
+
+```java
+root.left = function(root.left);
+
+root.right = function(root.right);
+```
+
+Used in:
+
+* Insert BST
+* Delete BST
+* Invert Tree
+* Balanced Tree
+* Subtree Problems
+* DFS Tree Traversal
+* Height/Depth Problems
