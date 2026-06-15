@@ -1,0 +1,756 @@
+# Validate Binary Search Tree (BST) — Full Logic + Recursion + OOP Explanation
+
+## Problem Statement
+
+We need to check:
+
+> Is the given Binary Tree a valid BST?
+
+BST Rule:
+
+```text
+For every node:
+
+left subtree < current node < right subtree
+```
+
+Very important:
+
+This rule applies to the **entire subtree**, not just immediate children.
+
+---
+
+# 1. Why the Simple Logic Fails
+
+Most beginners try this:
+
+```java
+if(root.left.val >= root.val)
+    return false;
+
+if(root.right.val <= root.val)
+    return false;
+```
+
+At first glance this looks correct.
+
+Why?
+
+Because BST says:
+
+```text
+left smaller
+right greater
+```
+
+But this logic is incomplete.
+
+It only checks:
+
+```text
+parent ↔ child relationship
+```
+
+It does NOT check the entire subtree.
+
+---
+
+## Example Where It Fails
+
+Tree:
+
+```text
+       10
+      /  \
+     5    15
+         /  \
+        6   20
+```
+
+Looks okay at first.
+
+### Check node 10
+
+```text
+5 < 10 ✅
+15 > 10 ✅
+```
+
+Passes.
+
+---
+
+### Check node 15
+
+```text
+6 < 15 ✅
+20 > 15 ✅
+```
+
+Passes.
+
+---
+
+### Final Answer from Wrong Logic
+
+```text
+TRUE
+```
+
+But this tree is actually:
+
+```text
+INVALID BST
+```
+
+Why?
+
+Because:
+
+```text
+6 is inside RIGHT subtree of 10
+```
+
+So:
+
+```text
+6 should be GREATER than 10
+```
+
+But:
+
+```text
+6 < 10 ❌
+```
+
+BST violated.
+
+The simple parent-child checking cannot detect this.
+
+---
+
+# 2. Correct Way of Thinking
+
+Instead of checking only parent-child relation:
+
+We think:
+
+> Every node has an allowed range.
+
+Each node must stay inside:
+
+```text
+(minimum allowed value, maximum allowed value)
+```
+
+---
+
+# 3. Understanding Range Logic
+
+Example Tree:
+
+```text
+       10
+      /  \
+     5    15
+         /
+        12
+```
+
+---
+
+## Root Node
+
+Node:
+
+```text
+10
+```
+
+Allowed range:
+
+```text
+(-∞ , +∞)
+```
+
+Anything is valid.
+
+---
+
+## Left Child of 10
+
+Node:
+
+```text
+5
+```
+
+Since left child must stay smaller:
+
+Range becomes:
+
+```text
+(-∞ , 10)
+```
+
+Meaning:
+
+```text
+must be less than 10
+```
+
+---
+
+## Right Child of 10
+
+Node:
+
+```text
+15
+```
+
+Range becomes:
+
+```text
+(10 , +∞)
+```
+
+Meaning:
+
+```text
+must be greater than 10
+```
+
+---
+
+## Left Child of 15
+
+Node:
+
+```text
+12
+```
+
+Now this is important.
+
+12 belongs to:
+
+```text
+RIGHT subtree of 10
+```
+
+So it must still remain:
+
+```text
+greater than 10
+```
+
+And since it's left of 15:
+
+```text
+smaller than 15
+```
+
+Final allowed range:
+
+```text
+(10 , 15)
+```
+
+Check:
+
+```text
+10 < 12 < 15
+```
+
+Valid ✅
+
+---
+
+## Invalid Example
+
+Tree:
+
+```text
+       10
+      /  \
+     5    15
+         /
+        6
+```
+
+Node:
+
+```text
+6
+```
+
+Allowed range:
+
+```text
+(10 , 15)
+```
+
+Check:
+
+```text
+6 > 10 ?
+```
+
+NO ❌
+
+Tree invalid.
+
+This is the exact case the simple logic misses.
+
+---
+
+# 4. Recursion Thinking
+
+At every node ask:
+
+### Question 1
+
+Is node inside valid range?
+
+If:
+
+```text
+node <= min
+```
+
+Invalid.
+
+OR
+
+```text
+node >= max
+```
+
+Invalid.
+
+---
+
+### Question 2
+
+Can left subtree still be valid?
+
+For left child:
+
+Maximum becomes:
+
+```text
+current node value
+```
+
+Because left must stay smaller.
+
+---
+
+### Question 3
+
+Can right subtree still be valid?
+
+For right child:
+
+Minimum becomes:
+
+```text
+current node value
+```
+
+Because right must stay greater.
+
+---
+
+# 5. Recursive Flow
+
+At every node:
+
+```text
+Check current node
+      ↓
+Go left with updated range
+      ↓
+Go right with updated range
+      ↓
+Combine answers
+```
+
+---
+
+# 6. Full Code (Copy-Paste Ready)
+
+```java
+class Solution {
+
+    public boolean isValidBST(TreeNode root) {
+
+        return check(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean check(TreeNode root, long min, long max) {
+
+        // base case
+        // empty tree is valid
+        if(root == null) {
+            return true;
+        }
+
+        // current node violates BST rule
+        if(root.val <= min || root.val >= max) {
+            return false;
+        }
+
+        // check left subtree
+        boolean left = check(root.left, min, root.val);
+
+        // check right subtree
+        boolean right = check(root.right, root.val, max);
+
+        return left && right;
+    }
+}
+```
+
+---
+
+# 7. Line-by-Line Explanation
+
+---
+
+## Step 1
+
+```java
+return check(root, Long.MIN_VALUE, Long.MAX_VALUE);
+```
+
+We start from root.
+
+Initially:
+
+```text
+no restrictions
+```
+
+So range is:
+
+```text
+(-∞ , +∞)
+```
+
+In Java:
+
+```java
+Long.MIN_VALUE
+Long.MAX_VALUE
+```
+
+represent huge limits.
+
+---
+
+## Step 2: Base Case
+
+```java
+if(root == null) {
+    return true;
+}
+```
+
+Meaning:
+
+```text
+empty subtree is valid
+```
+
+Example:
+
+Leaf node:
+
+```text
+   5
+  / \
+null null
+```
+
+Both null children are valid.
+
+---
+
+## Step 3: Validation
+
+```java
+if(root.val <= min || root.val >= max)
+```
+
+Meaning:
+
+Ask:
+
+```text
+Is current node violating allowed range?
+```
+
+Example:
+
+Allowed:
+
+```text
+(10 , 15)
+```
+
+Current:
+
+```text
+6
+```
+
+Check:
+
+```text
+6 <= 10
+```
+
+TRUE ❌
+
+Invalid BST.
+
+---
+
+## Step 4: Left Recursion
+
+```java
+boolean left =
+check(root.left, min, root.val);
+```
+
+Why?
+
+Left subtree must stay:
+
+```text
+smaller than root
+```
+
+So:
+
+```text
+max = root.val
+```
+
+Example:
+
+Current:
+
+```text
+10
+```
+
+Left range:
+
+```text
+(-∞ , 10)
+```
+
+---
+
+## Step 5: Right Recursion
+
+```java
+boolean right =
+check(root.right, root.val, max);
+```
+
+Why?
+
+Right subtree must stay:
+
+```text
+greater than root
+```
+
+So:
+
+```text
+min = root.val
+```
+
+Example:
+
+Current:
+
+```text
+10
+```
+
+Right range:
+
+```text
+(10 , +∞)
+```
+
+---
+
+## Step 6: Final Answer
+
+```java
+return left && right;
+```
+
+Meaning:
+
+Both subtrees must be valid.
+
+If even one becomes false:
+
+```text
+whole BST invalid
+```
+
+---
+
+# 8. Complete Dry Run
+
+Tree:
+
+```text
+       10
+      /  \
+     5    15
+         /
+        6
+```
+
+---
+
+### Call 1
+
+```text
+check(10, -∞, +∞)
+```
+
+Check:
+
+```text
+10 inside range?
+```
+
+YES ✅
+
+---
+
+### Left Child
+
+```text
+check(5, -∞, 10)
+```
+
+Check:
+
+```text
+5 inside range?
+```
+
+YES ✅
+
+No issue.
+
+---
+
+### Right Child
+
+```text
+check(15, 10, +∞)
+```
+
+Check:
+
+```text
+15 inside range?
+```
+
+YES ✅
+
+---
+
+### Left Child of 15
+
+```text
+check(6, 10, 15)
+```
+
+Check:
+
+```text
+6 <= 10
+```
+
+TRUE ❌
+
+Return:
+
+```text
+false
+```
+
+Now recursion bubbles upward:
+
+```text
+false
+→ false
+→ false
+```
+
+Final answer:
+
+```text
+Invalid BST
+```
+
+Correct.
+
+---
+
+# 9. Why Use `long` Instead of `int`
+
+Suppose node value is:
+
+```text
+Integer.MIN_VALUE
+```
+
+Using int boundaries may break.
+
+So we use:
+
+```java
+long
+```
+
+Safer range.
+
+---
+
+# 10. Pattern to Remember for Tree Recursion
+
+Ask yourself:
+
+> “What extra information should child know?”
+
+For this problem child needs:
+
+```text
+minimum allowed value
+maximum allowed value
+```
+
+So we pass:
+
+```java
+(min, max)
+```
+
+in recursion.
+
+This same thinking is used in advanced tree problems too.
