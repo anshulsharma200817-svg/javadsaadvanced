@@ -1,0 +1,8 @@
+// heap data structure must be a complete binary tree and left node must be filled before right node
+parentnode<or>both left and right and is called min and maxx heap respectively
+// key observation the root node is the minimum element in heap data structure
+for given ith index left child=2*i+1
+for left child=2*i+2
+parent=(i-1)/2
+// two case we either do deletion using heapify always delete first root node and then find and swap from top to bottom
+//another case where we do insertion using heapify always insert in last and then swap from child to parent according to the condition
