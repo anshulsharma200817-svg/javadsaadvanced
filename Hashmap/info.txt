@@ -1,0 +1,478 @@
+============================================================
+                HASHMAP PATTERNS
+============================================================
+
+RULE #1
+
+Whenever the question asks:
+
+- Frequency
+- Count
+- Occurrence
+- Repeated
+- Duplicate
+
+Think:
+
+HashMap
+
+============================================================
+PATTERN 1 : FREQUENCY COUNTING
+============================================================
+
+Keywords:
+
+Frequency
+Count
+Occurrence
+Most Frequent
+Least Frequent
+
+Questions:
+
+217 Contains Duplicate
+347 Top K Frequent Elements
+451 Sort Characters By Frequency
+169 Majority Element
+
+Example:
+
+nums = [1,1,2,2,2,3]
+
+Map:
+
+1 -> 2
+2 -> 3
+3 -> 1
+
+============================================================
+PATTERN 2 : COUNTING CHARACTERS
+============================================================
+
+Keywords:
+
+Character Frequency
+Anagrams
+Repeated Characters
+
+Questions:
+
+242 Valid Anagram
+49 Group Anagrams
+383 Ransom Note
+
+Example:
+
+"banana"
+
+b -> 1
+a -> 3
+n -> 2
+
+============================================================
+PATTERN 3 : EXISTENCE CHECK
+============================================================
+
+Keywords:
+
+Does X exist?
+Seen before?
+Duplicate?
+Contains?
+
+Questions:
+
+217 Contains Duplicate
+219 Contains Duplicate II
+
+Idea:
+
+if(map.containsKey(x))
+
+============================================================
+PATTERN 4 : PAIR SUM PROBLEMS
+============================================================
+
+Keywords:
+
+Two Sum
+Target Sum
+Pair Exists
+
+Questions:
+
+1 Two Sum
+1679 Max Number of K-Sum Pairs
+
+Example:
+
+Target = 9
+
+Current = 7
+
+Need:
+
+9 - 7 = 2
+
+Check:
+
+map.containsKey(2)
+
+============================================================
+PATTERN 5 : PREFIX SUM + HASHMAP
+============================================================
+
+Keywords:
+
+Subarray Sum
+Number of Subarrays
+Target Sum
+
+Questions:
+
+560 Subarray Sum Equals K
+974 Subarray Sums Divisible By K
+525 Contiguous Array
+
+Recognition:
+
+Question contains:
+
+Subarray
+Count
+Sum
+
+Think:
+
+Prefix Sum + HashMap
+
+============================================================
+PATTERN 6 : INDEX STORAGE
+============================================================
+
+Keywords:
+
+Nearest
+Previous Occurrence
+Distance Between Equal Elements
+
+Questions:
+
+1 Two Sum
+219 Contains Duplicate II
+
+Store:
+
+value -> index
+
+============================================================
+PATTERN 7 : GROUPING
+============================================================
+
+Keywords:
+
+Group
+Cluster
+Same Category
+
+Questions:
+
+49 Group Anagrams
+1282 Group The People
+
+Store:
+
+key -> list
+
+Example:
+
+eat -> aet
+tea -> aet
+ate -> aet
+
+Map:
+
+aet -> [eat,tea,ate]
+
+============================================================
+PATTERN 8 : COUNT DISTINCT
+============================================================
+
+Keywords:
+
+Distinct
+Unique
+Different Elements
+
+Questions:
+
+3 Longest Substring Without Repeating Characters
+340 Longest Substring With K Distinct
+
+Store:
+
+character -> count
+
+============================================================
+PATTERN 9 : SLIDING WINDOW + HASHMAP
+============================================================
+
+Keywords:
+
+Substring
+Window
+Distinct
+Repeated Characters
+
+Questions:
+
+3 Longest Substring Without Repeating Characters
+76 Minimum Window Substring
+438 Find All Anagrams
+
+Store:
+
+character -> frequency
+
+============================================================
+PATTERN 10 : HASHMAP + HEAP
+============================================================
+
+Keywords:
+
+Top K Frequent
+Most Frequent
+
+Questions:
+
+347 Top K Frequent Elements
+692 Top K Frequent Words
+
+Process:
+
+HashMap -> Count
+Heap -> Retrieve Top K
+
+============================================================
+PATTERN 11 : HASHMAP + SORTING
+============================================================
+
+Keywords:
+
+Sort By Frequency
+Sort By Count
+
+Questions:
+
+451 Sort Characters By Frequency
+
+Process:
+
+HashMap -> Count
+Sort -> Order
+
+============================================================
+PATTERN 12 : HASHMAP + SET
+============================================================
+
+Keywords:
+
+Unique
+Duplicate
+Visited
+
+Questions:
+
+128 Longest Consecutive Sequence
+217 Contains Duplicate
+
+Sometimes HashSet alone is enough.
+
+============================================================
+PATTERN 13 : BI-DIRECTIONAL LOOKUP
+============================================================
+
+Keywords:
+
+Key -> Value
+Value -> Key
+
+Questions:
+
+290 Word Pattern
+205 Isomorphic Strings
+
+Store:
+
+a -> x
+b -> y
+
+And reverse mapping.
+
+============================================================
+PATTERN 14 : CACHE DESIGN
+============================================================
+
+Keywords:
+
+Recently Used
+Fast Lookup
+
+Questions:
+
+146 LRU Cache
+
+Store:
+
+key -> node
+
+============================================================
+PATTERN 15 : GRAPH REPRESENTATION
+============================================================
+
+Keywords:
+
+Unknown Nodes
+String Nodes
+
+Questions:
+
+Evaluate Division
+Clone Graph
+
+Store:
+
+node -> neighbors
+
+============================================================
+PATTERN 16 : COUNT + CONDITIONS
+============================================================
+
+Keywords:
+
+Majority
+More Than Half
+Appears K Times
+
+Questions:
+
+169 Majority Element
+229 Majority Element II
+
+Often HashMap first intuition.
+
+============================================================
+PATTERN 17 : HASHMAP OF LISTS
+============================================================
+
+Keywords:
+
+Group Similar Elements
+
+Example:
+
+1 -> [2,3,4]
+2 -> [5,6]
+
+Questions:
+
+Group Anagrams
+Graph Problems
+
+============================================================
+PATTERN 18 : HASHMAP OF HASHMAPS
+============================================================
+
+Keywords:
+
+Nested Relationships
+
+Store:
+
+user -> (product -> count)
+
+Less common.
+
+============================================================
+HASHMAP DECISION TREE
+============================================================
+
+Question says:
+
+Frequency?
+→ HashMap
+
+Count?
+→ HashMap
+
+Occurrence?
+→ HashMap
+
+Duplicate?
+→ HashMap or HashSet
+
+Target Pair?
+→ HashMap
+
+Subarray Count?
+→ Prefix Sum + HashMap
+
+Group Similar Items?
+→ HashMap<List>
+
+Substring Problems?
+→ Sliding Window + HashMap
+
+Top K Frequent?
+→ HashMap + Heap
+
+Sort By Frequency?
+→ HashMap + Sorting
+
+============================================================
+INTERVIEW GOLDEN RULE
+============================================================
+
+Whenever you need:
+
+Value -> Information
+
+Think:
+
+HashMap
+
+Examples:
+
+Number -> Frequency
+Number -> Index
+Character -> Count
+Word -> Frequency
+Node -> Neighbors
+
+HashMap is basically:
+
+Value -> Extra Information
+
+If a question requires remembering information about a value,
+HashMap should be your first thought.
+============================================================
+The biggest intuition shift
+
+When reading a problem, ask:
+
+"Do I need to remember something about each value I've seen before?"
+
+If yes, 80% of the time the answer is:
+
+HashMap<Key, Information>
+
+Examples:
+
+Number -> Frequency
+Number -> Index
+Character -> Count
+Character -> Last Position
+Word -> Frequency
+Node -> Neighbors
+
+That single question will help you identify HashMap problems much faster during interviews and contests.
