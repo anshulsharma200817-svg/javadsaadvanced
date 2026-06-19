@@ -6,3 +6,406 @@ for left child=2*i+2
 parent=(i-1)/2
 // two case we either do deletion using heapify always delete first root node and then find and swap from top to bottom
 //another case where we do insertion using heapify always insert in last and then swap from child to parent according to the condition
+============================================================
+                HEAP / PRIORITY QUEUE PATTERNS
+============================================================
+
+WHEN TO THINK OF HEAP?
+
+Keywords:
+- Kth Largest
+- Kth Smallest
+- Top K
+- Closest
+- Minimum
+- Maximum
+- Most Frequent
+- Median
+- Stream of Data
+- Merge K Sorted Structures
+- Shortest Path
+
+If you see these words, think:
+PriorityQueue
+
+============================================================
+PATTERN 1 : KTH LARGEST / KTH SMALLEST
+============================================================
+
+Question Type:
+- Kth Largest Element
+- Kth Smallest Element
+
+Idea:
+Maintain heap size = k
+
+Kth Largest:
+Use Min Heap
+
+Reason:
+Heap stores k largest elements.
+Top element = kth largest.
+
+Questions:
+- 215 Kth Largest Element in Array
+- 703 Kth Largest Element in Stream
+
+============================================================
+PATTERN 2 : TOP K ELEMENTS
+============================================================
+
+Question Type:
+- Top K Frequent
+- Top K Largest
+- Top K Closest
+
+Idea:
+Keep only the best k candidates.
+
+Questions:
+- 347 Top K Frequent Elements
+- 692 Top K Frequent Words
+- 973 K Closest Points To Origin
+
+============================================================
+PATTERN 3 : FREQUENCY + HEAP
+============================================================
+
+Question Type:
+- Most Frequent
+- Least Frequent
+- Frequency Based Ranking
+
+Idea:
+Step 1 -> Count using HashMap
+Step 2 -> Sort using Heap
+
+Questions:
+- 347 Top K Frequent Elements
+- 451 Sort Characters By Frequency
+
+============================================================
+PATTERN 4 : CUSTOM COMPARATOR HEAP
+============================================================
+
+Question Type:
+- Pair
+- Point
+- Node
+- Object
+
+Idea:
+Store custom objects inside heap.
+
+Example:
+
+PriorityQueue<Pair> pq =
+new PriorityQueue<>((a,b)->a.dist-b.dist);
+
+Questions:
+- 973 K Closest Points
+- 23 Merge K Sorted Lists
+- 378 Kth Smallest Matrix
+
+============================================================
+PATTERN 5 : MERGE K SORTED STRUCTURES
+============================================================
+
+Question Type:
+- Merge K Lists
+- Merge K Arrays
+- Merge K Streams
+
+Idea:
+Put first element from each structure
+inside heap.
+
+Always take smallest.
+
+Questions:
+- 23 Merge K Sorted Lists
+- 378 Kth Smallest Matrix
+- 632 Smallest Range Covering K Lists
+
+============================================================
+PATTERN 6 : GENERATE NUMBERS
+============================================================
+
+Question Type:
+- Nth Number
+- Generate Sequence
+- Ugly Numbers
+
+Idea:
+Current number generates future numbers.
+
+Use:
+- Heap
+- HashSet
+
+Questions:
+- 264 Ugly Number II
+- 313 Super Ugly Number
+
+============================================================
+PATTERN 7 : TWO HEAPS
+============================================================
+
+Question Type:
+- Median
+- Running Median
+- Data Stream
+
+Idea:
+
+Left Half  -> Max Heap
+Right Half -> Min Heap
+
+Maintain balance.
+
+Questions:
+- 295 Median From Data Stream
+- 480 Sliding Window Median
+
+============================================================
+PATTERN 8 : GREEDY + HEAP
+============================================================
+
+Question Type:
+- Maximize Profit
+- Minimize Cost
+- Resource Allocation
+
+Idea:
+Greedy decision + Heap
+
+Questions:
+- 1642 Furthest Building
+- 502 IPO
+- 621 Task Scheduler
+
+============================================================
+PATTERN 9 : MAX HEAP
+============================================================
+
+Question Type:
+- Repeatedly take largest
+- Largest element first
+
+Java:
+
+PriorityQueue<Integer> pq =
+new PriorityQueue<>(Collections.reverseOrder());
+
+Questions:
+- 1046 Last Stone Weight
+- 767 Reorganize String
+- 621 Task Scheduler
+
+============================================================
+PATTERN 10 : MINIMUM COST MERGING
+============================================================
+
+Question Type:
+- Minimum Cost
+- Combine Elements
+- Merge Cost
+
+Idea:
+Always combine smallest first.
+
+Questions:
+- 1167 Minimum Cost To Connect Sticks
+- Huffman Coding
+- Optimal Merge Pattern
+
+============================================================
+PATTERN 11 : INTERVAL + HEAP
+============================================================
+
+Question Type:
+- Meeting Rooms
+- Scheduling
+- Intervals
+
+Idea:
+Store ending times in heap.
+
+Questions:
+- 253 Meeting Rooms II
+- 759 Employee Free Time
+
+============================================================
+PATTERN 12 : SLIDING WINDOW + HEAP
+============================================================
+
+Question Type:
+- Window Maximum
+- Window Median
+
+Questions:
+- 239 Sliding Window Maximum
+- 480 Sliding Window Median
+
+============================================================
+PATTERN 13 : GRAPH + HEAP
+============================================================
+
+Question Type:
+- Shortest Path
+- Minimum Cost Path
+- Minimum Distance
+
+Idea:
+Store (node,distance) in heap.
+
+Questions:
+- Dijkstra Algorithm
+- Prim's Algorithm
+- 743 Network Delay Time
+- 1631 Path With Minimum Effort
+
+============================================================
+PATTERN 14 : SORTING + HEAP
+============================================================
+
+Question Type:
+- Dynamic Ordering
+- Continuously Sorted Processing
+
+Questions:
+- 502 IPO
+- 857 Minimum Cost To Hire Workers
+
+============================================================
+PATTERN 15 : SCHEDULING
+============================================================
+
+Question Type:
+- CPU Scheduling
+- Task Scheduling
+- Resource Scheduling
+
+Questions:
+- 621 Task Scheduler
+- 1834 Single Threaded CPU
+
+============================================================
+PRIORITY QUEUE SYNTAX
+============================================================
+
+MIN HEAP
+
+PriorityQueue<Integer> pq =
+new PriorityQueue<>();
+
+------------------------------------------------------------
+
+MAX HEAP
+
+PriorityQueue<Integer> pq =
+new PriorityQueue<>(Collections.reverseOrder());
+
+------------------------------------------------------------
+
+CUSTOM COMPARATOR
+
+PriorityQueue<Pair> pq =
+new PriorityQueue<>((a,b)->a.dist-b.dist);
+
+------------------------------------------------------------
+
+OPERATIONS
+
+pq.add(x);
+pq.offer(x);
+
+pq.poll();
+
+pq.peek();
+
+pq.size();
+
+pq.isEmpty();
+
+============================================================
+MUST DO HEAP QUESTIONS
+============================================================
+
+EASY
+----
+1046 Last Stone Weight
+703 Kth Largest In Stream
+
+MEDIUM
+------
+215 Kth Largest Element
+347 Top K Frequent Elements
+973 K Closest Points
+264 Ugly Number II
+23 Merge K Sorted Lists
+378 Kth Smallest Matrix
+373 K Smallest Pairs
+295 Median From Data Stream
+1642 Furthest Building
+502 IPO
+
+HARD
+----
+632 Smallest Range Covering K Lists
+480 Sliding Window Median
+857 Minimum Cost To Hire Workers
+
+============================================================
+HEAP DECISION TREE
+============================================================
+
+Kth Largest?
+-> Min Heap
+
+Largest Repeatedly?
+-> Max Heap
+
+Top K Frequent?
+-> HashMap + Heap
+
+Median?
+-> Two Heaps
+
+Merge K Lists?
+-> Heap of Nodes
+
+Generate Sequence?
+-> Heap + HashSet
+
+Shortest Path?
+-> Heap + Graph
+
+Meeting Rooms?
+-> Interval + Heap
+
+Minimum Cost Merge?
+-> Min Heap
+
+============================================================
+INTERVIEW RULE
+============================================================
+
+If the question contains:
+
+Top K
+Kth
+Largest
+Smallest
+Closest
+Most Frequent
+Median
+Merge K
+Stream
+Shortest Path
+
+Ask yourself:
+
+"Can a Heap solve this efficiently?"
+
+============================================================
