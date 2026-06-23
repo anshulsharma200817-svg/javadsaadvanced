@@ -1,35 +1,79 @@
-package practice;
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
 
-import java.util.*;
-
-public class TwoSum {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter number of elements:");
-        int n = sc.nextInt();
-        int[] arr = new int[n];
-        System.out.println("Enter elements:");
-        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
-        
-        System.out.println("Enter target sum:");
-        int target = sc.nextInt();
-        
         HashMap<Integer, Integer> map = new HashMap<>();
-        boolean found = false;
-        
-        for (int i = 0; i < n; i++) {
-            int complement = target - arr[i];
-            if (map.containsKey(complement)) {
-                System.out.println("Indices: [" + map.get(complement) + ", " + i + "]");
-                System.out.println("Elements: " + complement + " and " + arr[i]);
-                found = true;
-                break;
+
+        for(int i = 0; i < nums.length; i++) {
+
+            int need = target - nums[i];
+
+            if(map.containsKey(need)) {
+                return new int[]{map.get(need), i};
             }
-            map.put(arr[i], i);
+
+            map.put(nums[i], i);
         }
-        if (!found) {
-            System.out.println("No two sum solution found.");
-        }
-        sc.close();
+
+        return new int[]{};
     }
 }
+class TwoSumPractice {
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int[] nums = {2, 7, 11, 15};
+        int target = 9;
+        int[] result = sol.twoSum(nums, target);
+        System.out.println(Arrays.toString(result));
+    }
+}
+/*nums = [2,7,11,15]
+target = 9
+
+Start:
+
+map = {}
+
+i = 0
+
+nums[i] = 2
+need = 7
+
+Not found.
+
+Store:
+
+{2 : 0}
+
+i = 1
+
+nums[i] = 7
+need = 2
+
+Found!
+
+Return:
+
+[0,1]
+
+Done.
+
+Pattern Learned
+
+This is bigger than Two Sum.
+
+Whenever you see:
+
+Find pair
+Find complement
+Find target sum
+Find difference
+
+Ask:
+
+Can I convert this into:
+
+"Have I seen the required value before?"
+
+If yes:
+
+HashMap / HashSet*/
