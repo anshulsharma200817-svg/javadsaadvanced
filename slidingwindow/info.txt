@@ -1,0 +1,266 @@
+How to Recognize Sliding Window
+
+If the problem contains these words:
+
+✅ Longest
+
+✅ Shortest / Minimum
+
+✅ Maximum length
+
+✅ Subarray
+
+✅ Substring
+
+✅ Continuous
+
+✅ Consecutive
+
+✅ At most K
+
+✅ Exactly K
+
+✅ No more than
+
+✅ Contiguous
+
+Your brain should immediately think:
+
+"Can I use a sliding window?"
+
+Examples:
+
+Longest substring
+Maximum consecutive ones
+Minimum size subarray
+Fruits into baskets
+Longest repeating character replacement
+Minimum window substring
+Sliding Window Pattern 1
+Fixed Size Window
+
+Example:
+
+Maximum sum of size K
+Average of K elements
+int left = 0;
+int sum = 0;
+int ans = 0;
+
+for (int right = 0; right < n; right++) {
+
+    sum += arr[right];
+
+    if (right - left + 1 == k) {
+
+        ans = Math.max(ans, sum);
+
+        sum -= arr[left];
+        left++;
+    }
+}
+
+Time:
+
+O(n)
+Sliding Window Pattern 2
+Variable Size Window (Most Important)
+int left = 0;
+int ans = 0;
+
+for (int right = 0; right < n; right++) {
+
+    // Expand Window
+
+    while (window is invalid) {
+
+        // Remove left element
+
+        left++;
+    }
+
+    ans = Math.max(ans, right - left + 1);
+}
+
+return ans;
+
+This solves:
+
+Fruits Into Baskets
+Max Consecutive Ones III
+Longest Substring Without Repeating Characters
+Character Replacement
+Minimum Size Subarray
+Sliding Window with HashMap
+HashMap<Character, Integer> map = new HashMap<>();
+
+int left = 0;
+int ans = 0;
+
+for (int right = 0; right < s.length(); right++) {
+
+    char ch = s.charAt(right);
+
+    map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+    while (window is invalid) {
+
+        char leftChar = s.charAt(left);
+
+        map.put(leftChar, map.get(leftChar) - 1);
+
+        if (map.get(leftChar) == 0) {
+            map.remove(leftChar);
+        }
+
+        left++;
+    }
+
+    ans = Math.max(ans, right - left + 1);
+}
+Sliding Window with Frequency Counter
+
+Example:
+
+Maximum Consecutive Ones III
+
+int left = 0;
+int zeroCount = 0;
+int ans = 0;
+
+for (int right = 0; right < nums.length; right++) {
+
+    if (nums[right] == 0)
+        zeroCount++;
+
+    while (zeroCount > k) {
+
+        if (nums[left] == 0)
+            zeroCount--;
+
+        left++;
+    }
+
+    ans = Math.max(ans, right - left + 1);
+}
+
+return ans;
+Sliding Window with Sum
+
+Example:
+
+Minimum Size Subarray Sum
+
+int left = 0;
+int sum = 0;
+int ans = Integer.MAX_VALUE;
+
+for (int right = 0; right < nums.length; right++) {
+
+    sum += nums[right];
+
+    while (sum >= target) {
+
+        ans = Math.min(ans, right - left + 1);
+
+        sum -= nums[left];
+        left++;
+    }
+}
+Sliding Window with HashSet
+
+Example:
+
+Longest Substring Without Repeating Characters
+
+HashSet<Character> set = new HashSet<>();
+
+int left = 0;
+int ans = 0;
+
+for (int right = 0; right < s.length(); right++) {
+
+    while (set.contains(s.charAt(right))) {
+
+        set.remove(s.charAt(left));
+        left++;
+    }
+
+    set.add(s.charAt(right));
+
+    ans = Math.max(ans, right - left + 1);
+}
+Golden Sliding Window Checklist
+
+Whenever you solve one:
+
+Step 1
+
+Expand
+
+right++;
+Step 2
+
+Update your data structure
+
+Sum
+HashMap
+HashSet
+Zero count
+Frequency
+Step 3
+
+Check
+
+Window Valid?
+
+If NO
+
+Shrink
+Step 4
+
+Remove left contribution
+
+Step 5
+
+Move left
+
+left++;
+Step 6
+
+Update answer
+
+ans = Math.max(ans, right - left + 1);
+My Personal Interview Checklist (This is what I want you to remember)
+
+When you read a problem, ask yourself these questions in order:
+
+1. Is it asking about a subarray/substring?
+
+2. Is it continuous?
+
+3. Longest?
+
+4. Shortest?
+
+5. Maximum?
+
+6. At most K?
+
+7. Exactly K?
+
+8. Can I keep a window instead of restarting every time?
+
+If 5 or more answers are YES, it's almost certainly a Sliding Window problem.
+
+Your Pattern Progress
+
+You've now learned:
+
+✅ Two Pointers (Read/Write)
+✅ Sliding Window (Variable)
+✅ HashMap Sliding Window
+✅ Frequency Map
+✅ Window Shrinking Logic
+
+This is a major milestone. These patterns alone solve a large number of medium-level interview problems. The next natural pattern to master is Prefix Sum, which complements sliding window for problems where windows can't be adjusted greedily.
