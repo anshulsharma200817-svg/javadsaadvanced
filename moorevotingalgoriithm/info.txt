@@ -1,0 +1,253 @@
+1. Why do we need 2 candidates?
+
+Because the condition is:
+
+frequency > n/3
+
+Let's prove it.
+
+Suppose:
+
+n = 12
+
+Need:
+
+frequency > 4
+
+Can 3 elements each appear more than 4 times?
+
+Example:
+
+A = 5
+B = 5
+C = 5
+
+Total:
+
+15
+
+Impossible.
+
+Therefore:
+
+At most 2 elements can occur more than n/3 times.
+
+That's why we maintain:
+
+candidate1
+candidate2
+
+instead of just one.
+
+2. Why is a second pass necessary?
+
+This is the most important interview question.
+
+Moore Voting does not guarantee that the remaining candidates are majority elements.
+
+It only guarantees:
+
+If a majority element exists, it must be one of these candidates.
+
+Example:
+
+[1,2,3,1,2,3]
+
+First pass may end with
+
+candidate1 = 2
+candidate2 = 3
+
+Does that mean they occur > n/3?
+
+No.
+
+Actual frequencies:
+
+1 -> 2
+
+2 -> 2
+
+3 -> 2
+
+Need:
+
+>2
+
+Nobody qualifies.
+
+Hence:
+
+Second pass verifies.
+
+3. Can Moore Voting be generalized?
+
+YES.
+
+This is a favorite Google question.
+
+Suppose condition becomes
+
+frequency > n/k
+
+Maximum possible winners?
+
+Answer:
+
+k-1
+
+Examples
+
+Condition	Candidates
+> n/2	1
+> n/3	2
+> n/4	3
+> n/5	4
+
+General rule:
+
+Maintain
+
+k-1 candidates
+
+k-1 counts
+4. Why use else if instead of multiple ifs?
+
+Very important.
+
+Suppose
+
+candidate1 = 5
+
+candidate2 = 5
+
+(Currently this shouldn't happen, but let's understand why.)
+
+Now
+
+num = 5
+
+If we wrote:
+
+if(candidate1==num)
+    count1++;
+
+if(candidate2==num)
+    count2++;
+
+Both counts increase.
+
+One vote became:
+
+2 votes
+
+Wrong.
+
+Using
+
+if(...)
+else if(...)
+
+means
+
+Only one condition executes.
+
+Exactly one vote is counted.
+
+5. Why decrement both counts?
+
+This is the intuition behind Moore Voting.
+
+Suppose
+
+candidate1 = A
+
+candidate2 = B
+
+Now a third element comes
+
+C
+
+Neither matches.
+
+Think of voting.
+
+Current votes
+
+A : 5
+
+B : 3
+
+Now
+
+C
+
+appears.
+
+Nobody dominates.
+
+One vote from A
+
+One vote from B
+
+One vote from C
+
+can all cancel.
+
+So we do
+
+count1--;
+
+count2--;
+
+We don't keep C because both candidate slots are occupied.
+
+Only when a count reaches zero does that candidate lose all remaining support, allowing a new candidate to replace it.
+
+The Mathematical Intuition
+
+Think of Moore Voting as pairwise elimination.
+
+For > n/2:
+
+A A A B B
+
+↓
+
+A A
+
+A survives.
+
+For > n/3:
+
+A B C
+
+↓
+
+remove all three
+
+Nobody dominates.
+
+If
+
+A A B C
+
+↓
+
+A
+
+A survives.
+
+Eventually only the true majority candidates remain.
+
+Google Interview Summary
+
+If an interviewer asks:
+
+"Explain Moore Voting without code."
+
+Say:
+
+"The algorithm works by repeatedly canceling votes between different elements. Since an element occurring more than n/k times cannot be completely canceled by all other elements combined, it must survive as one of the final candidates. The first pass identifies potential candidates through cancellation, and the second pass verifies their actual frequencies because surviving the cancellation process alone does not guarantee they satisfy the required frequency threshold."
+
+⭐⭐⭐⭐⭐ Interview Rating: If you can explain these five answers in your own words, you've moved beyond memorizing the algorithm—you actually understand why it works. That's exactly what interviewers at companies like Google look for.
