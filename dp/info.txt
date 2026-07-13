@@ -1,0 +1,502 @@
+The Big Picture
+
+Every problem starts with one question:
+
+Can I solve this by making one decision?
+
+If YES → Iteration / Greedy
+
+If NO → Ask:
+
+Do I need to explore multiple possibilities?
+
+If YES → Recursion
+
+Now comes the important part.
+
+Step 1: Recursion
+
+Recursion is not an algorithm.
+
+It is simply a way to express a problem.
+
+Example:
+
+factorial(n)
+
+depends on
+
+factorial(n-1)
+
+No choices.
+
+Just one recursive call.
+
+Tree:
+
+factorial(5)
+    |
+factorial(4)
+    |
+factorial(3)
+
+This is pure recursion.
+
+Use it when:
+
+Tree traversal
+Factorial
+Fibonacci (naive)
+Linked list recursion
+DFS
+Step 2: Does one state create MANY choices?
+
+Example
+
+Maze
+
+At one cell
+
+↑ ↓ ← →
+
+Four choices.
+
+Or
+
+Subset
+
+Take
+
+Don't Take
+
+Two choices.
+
+Tree
+
+          []
+        /    \
+      Take   Skip
+
+Now you're exploring possibilities.
+
+This is
+
+Backtracking
+
+Backtracking =
+
+Recursion
+
++
+
+Undo
+
++
+
+Explore another choice
+
+Use it when the question asks
+
+Find ALL
+Generate ALL
+Every possibility
+Every permutation
+Every combination
+Sudoku
+N Queens
+Maze
+
+Notice
+
+You're exploring.
+
+Not optimizing.
+
+Step 3: Do I solve the SAME subproblem repeatedly?
+
+Example
+
+Fib(5)
+
+Tree
+
+         5
+      /     \
+    4         3
+   / \       / \
+ 3   2     2   1
+
+Notice
+
+Fib(3)
+
+appears twice.
+
+Fib(2)
+
+appears three times.
+
+This is
+
+Overlapping Subproblems
+
+Now
+
+Recursion becomes
+
+Memoization
+
+Memoization
+
+Memoization is
+
+Recursion
+
++
+
+Cache
+
+Instead of
+
+fib(3)
+
+again,
+
+look in
+
+dp[3]
+
+Already solved?
+
+Return.
+
+Use it when
+
+Same recursive state repeats.
+Step 4: Can recursion be removed?
+
+Suppose
+
+dp[i]
+
+depends on
+
+dp[i-1]
+
+Instead of recursion
+
+fill
+
+0
+
+1
+
+2
+
+3
+
+This is
+
+Tabulation.
+
+Therefore
+
+Memoization
+
+↓
+
+becomes
+
+↓
+
+Tabulation
+
+Both are DP.
+
+One is Top Down.
+
+One is Bottom Up.
+
+Architecture
+Problem
+
+│
+
+├── One decision only
+
+│      │
+
+│      ├── Greedy
+
+│      └── Simple Iteration
+
+│
+
+└── Multiple Choices
+
+       │
+
+       └── Recursion
+
+              │
+
+              ├── Need ALL answers?
+
+              │      │
+
+              │      └── Backtracking
+
+              │
+
+              └── Need BEST answer?
+
+                     │
+
+                     ├── Same state repeats?
+
+                     │      │
+
+                     │      ├── YES → DP
+
+                     │      │        │
+
+                     │      │        ├── Memoization
+
+                     │      │        └── Tabulation
+
+                     │      │
+
+                     │      └── NO → Plain Recursion
+
+This single flowchart answers about 90% of "which technique?" questions.
+
+Let's Compare
+Factorial
+5!
+
+↓
+
+4!
+
+↓
+
+3!
+
+Choices?
+
+No.
+
+Repeated?
+
+No.
+
+Technique
+
+✅ Recursion
+
+Fibonacci
+Fib(5)
+
+↓
+
+Fib(4)
+
+↓
+
+Fib(3)
+
+Repeated?
+
+Yes.
+
+Technique
+
+✅ DP
+
+Subsets
+
+Question
+
+Generate all subsets.
+
+Choices
+
+Take
+
+Skip
+
+Need all?
+
+Yes.
+
+Technique
+
+✅ Backtracking
+
+House Robber
+
+Choices
+
+Rob
+
+Skip
+
+Need all possibilities?
+
+No.
+
+Need maximum money.
+
+Repeated?
+
+Yes.
+
+Technique
+
+✅ DP
+
+N Queens
+
+Choices
+
+Queen here?
+
+No
+
+Try next column.
+
+Need every arrangement?
+
+Yes.
+
+Technique
+
+✅ Backtracking
+
+Coin Change
+
+Choices
+
+Take coin
+
+Skip coin
+
+Need minimum coins.
+
+Repeated states?
+
+Yes.
+
+Technique
+
+✅ DP
+
+Maze
+
+Need every path?
+
+Backtracking.
+
+Need shortest path?
+
+BFS.
+
+Need minimum cost?
+
+DP or Dijkstra depending on the graph.
+
+The Golden Difference
+Backtracking
+
+Question
+
+Explore everything.
+
+Example
+
+Sudoku
+
+N Queens
+
+Permutations
+DP
+
+Question
+
+Find BEST.
+
+Example
+
+Minimum
+
+Maximum
+
+Ways
+Quick Recognition Table
+If Question Says...	Think
+Generate all	Backtracking
+All subsets	Backtracking
+All permutations	Backtracking
+Every path	Backtracking
+Minimum	DP / Greedy
+Maximum	DP / Greedy
+Number of ways	DP
+Longest	DP
+Shortest	DP / BFS
+Can we reach	Greedy / DP / BFS (depends on the problem)
+My Interview Decision Tree
+
+Whenever I read a problem, I literally ask these questions:
+
+1. Can I solve it with one local decision?
+        ↓
+      Greedy
+
+2. Do I have to explore multiple choices?
+        ↓
+      Recursion
+
+3. Do I need every possible answer?
+        ↓
+      Backtracking
+
+4. Do the same states repeat?
+        ↓
+      DP
+
+5. Am I finding an optimum (min/max/count)?
+        ↓
+      DP
+
+6. Can I eliminate recursion?
+        ↓
+      Tabulation
+One Last Mental Model
+
+Think of recursion as the base engine.
+
+                 Recursion
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+   One recursive call      Multiple recursive calls
+          │                       │
+   Pure Recursion           Need all solutions?
+                                    │
+                           ┌────────┴────────┐
+                           │                 │
+                         Yes               No
+                           │                 │
+                    Backtracking      Do states repeat?
+                                             │
+                                      ┌──────┴──────┐
+                                      │             │
+                                     No           Yes
+                                      │             │
+                               Plain Recursion      DP
+                                                     │
+                                       ┌─────────────┴─────────────┐
+                                       │                           │
+                                 Memoization                 Tabulation
+
+This is the architecture I wish every DSA course taught. Once you internalize it, you'll stop asking "Which technique should I use?" and instead derive the right approach from the problem's properties.
