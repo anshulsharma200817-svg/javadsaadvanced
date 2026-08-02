@@ -20,7 +20,7 @@ Big answer can be built from smaller answers.
 Example:
 
 f(5)=f(4)+f(3)*/
-public class fibodp {
+public class fibodptabulation {
     public static void main(String[] args) {
         int n = 5;
         int[] dp = new int[n + 1];
